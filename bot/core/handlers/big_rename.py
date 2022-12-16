@@ -33,7 +33,7 @@ async def handle_big_rename(
     file_type: str
 ):
     await editable.edit("Sending to you ...")
-    upload_as_doc = await db.get_upload_as_doc(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
+    upload_as_doc = await db.get_upload_as_doc(m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID)
 
     if (upload_as_doc is False) and (file_type == "video"):
         ttl_seconds = None
@@ -45,13 +45,13 @@ async def handle_big_rename(
         _f_thumb = m.reply_to_message.video.thumbs[0] \
             if m.reply_to_message.video.thumbs \
             else None
-        _db_thumb = await db.get_thumbnail(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
+        _db_thumb = await db.get_thumbnail(m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID)
         thumbnail_file_id = _db_thumb or (_f_thumb.file_id if _f_thumb else None)
 
         if thumbnail_file_id:
             await editable.edit("Fetching Thumbnail ...")
             thumb_path = await c.download_media(thumbnail_file_id,
-                                                f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID}/{m.message_id}/")
+                                                f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID}/{m.message_id}/")
             if _db_thumb:
                 thumb_path = await fix_thumbnail(thumb_path)
             thumb = await c.save_file(path=thumb_path)
@@ -78,13 +78,13 @@ async def handle_big_rename(
         _f_thumb = m.reply_to_message.audio.thumbs[0] \
             if m.reply_to_message.audio.thumbs \
             else None
-        _db_thumb = await db.get_thumbnail(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
+        _db_thumb = await db.get_thumbnail(m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID)
         thumbnail_file_id = _db_thumb or (_f_thumb.file_id if _f_thumb else None)
 
         if thumbnail_file_id:
             await editable.edit("Fetching Thumbnail ...")
             thumb_path = await c.download_media(thumbnail_file_id,
-                                                f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID}/{m.message_id}/")
+                                                f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID}/{m.message_id}/")
             if _db_thumb:
                 thumb_path = await fix_thumbnail(thumb_path)
             thumb = await c.save_file(path=thumb_path)
@@ -120,7 +120,7 @@ async def handle_big_rename(
         if thumbnail_file_id := _db_thumb or _f_thumb or None:
             await editable.edit("Fetching Thumbnail ...")
             thumb_path = await c.download_media(thumbnail_file_id,
-                                                f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID}/{m.message_id}/")
+                                                f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID}/{m.message_id}/")
             if _db_thumb:
                 thumb_path = await fix_thumbnail(thumb_path)
             thumb = await c.save_file(path=thumb_path)
@@ -141,8 +141,8 @@ async def handle_big_rename(
         return await editable.edit("I can't rename it!")
 
     reply_markup = m.reply_to_message.reply_markup or None
-    _db_caption = await db.get_caption(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
-    apply_caption = await db.get_apply_caption(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
+    _db_caption = await db.get_caption(m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID)
+    apply_caption = await db.get_apply_caption(m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID)
     if (not _db_caption) and (apply_caption is True):
         caption = re.sub(f"{Config.REMOVE_CAPTION}","",m.reply_to_message.caption.markdown) \
             if m.reply_to_message.caption \
@@ -166,7 +166,7 @@ async def handle_big_rename(
                 **await utils.parse_text_entities(c, caption, parse_mode, None)
             )
         )
-        await rm_dir(f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID}/{m.message_id}/")
+        await rm_dir(f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID}/{m.message_id}/")
     except Exception as _err:
         Config.LOGGER.getLogger(__name__).error(_err)
         Config.LOGGER.getLogger(__name__).info(f"{traceback.format_exc()}")
