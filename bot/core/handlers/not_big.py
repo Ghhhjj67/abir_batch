@@ -1,6 +1,7 @@
 # (c) @AbirHasan2005
 
 from configs import Config
+import re
 from bot.client import Client
 from pyrogram.types import Message
 from bot.core.db.database import db
@@ -21,9 +22,9 @@ async def handle_not_big(
     _db_caption = await db.get_caption(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
     apply_caption = await db.get_apply_caption(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
     if (not _db_caption) and (apply_caption is True):
-        caption = m.reply_to_message.caption.markdown \
+        caption = re.sub(f"{Config.REMOVE_CAPTION}","",m.reply_to_message.caption.markdown \
             if m.reply_to_message.caption \
-            else ""
+            else "** **"
     elif _db_caption and (apply_caption is True):
         caption = _db_caption
     else:
