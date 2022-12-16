@@ -1,5 +1,5 @@
 # (c) @AbirHasan2005
-from keep_alive import keep_alive
+from bot.keep_alive import keep_alive
 from typing import Union
 from pyromod import listen
 from pyrogram import Client as RawClient
