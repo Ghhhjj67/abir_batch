@@ -67,7 +67,6 @@ async def batch_rename_handler(c: Client, m: Message):
     try:
         for i in range(files_config["last_file_id"], len(total_messages), 200):
             channel_posts = AsyncIter(await c.get_messages(Config.FROM_CHANNEL, total_messages[i:i+200]))
-
             async with lock:
                 async for file_message in channel_posts:
                     if temp.CANCEL:
@@ -75,12 +74,12 @@ async def batch_rename_handler(c: Client, m: Message):
                     if file_message.video or file_message.document:
                         try:
                             files_config = await db.get_bot_stats()
-                            if file_message.document.file_id not in files_config["file_done"]:
+                            if get_media_file_id(file_message) not in files_config["file_done"]:
                                 fwd_msg = await file_message.forward(Config.LOG_CHANNEL)
                                 m = await fwd_msg.reply("Renaming this file now...")
                                 await main_btach_rename_handler(c, m, editable)
                                 success += 1
-                                files_config["file_done"].append(fwd_msg.document.file_id)
+                                files_config["file_done"].append(get_media_file_id(file_message))
                                 await db.update_stats({"total_files_done":files_config["total_files_done"]+1, "last_file_id":fwd_msg.message_id, "file_done":files_config["file_done"]})
                                 await m.delete()
                                 await fwd_msg.delete()
@@ -88,7 +87,7 @@ async def batch_rename_handler(c: Client, m: Message):
                         except Exception as e:
                             print(e)
                             fail+=1
-                        await asyncio.sleep(1)
+                        await asyncio.sleep(3)
                     else:
                         empty += 1
                     total+=1
@@ -102,7 +101,7 @@ async def batch_rename_handler(c: Client, m: Message):
 
     finally:
         end_time = datetime.datetime.now()
-        await asyncio.sleep(10)
+        await asyncio.sleep(6)
         t = end_time - start_time
         time_taken = str(datetime.timedelta(seconds=t.seconds))
         msg = f"Batch Shortening Completed!\n\nTime Taken - `{time_taken}`\n\nTotal: `{total}`\nSuccess: `{success}`\nFailed: `{fail}`\nEmpty: `{empty}`"
@@ -114,16 +113,22 @@ async def main_btach_rename_handler(c: Client, m: Message, editable):
         _file_ext = mimetypes.guess_extension(get_file_attr(m.reply_to_message).mime_type)
         _raw_file_name = f"UnknownFileName{_file_ext}"
 
-    user_input_msg = clean_filename(_raw_file_name)
-    print(user_input_msg)
-    if user_input_msg.rsplit(".", 1)[-1].lower() != _raw_file_name.rsplit(".", 1)[-1].lower():
-        file_name = user_input_msg.rsplit(".", 1)[0][:255] + "." + _raw_file_name.rsplit(".", 1)[-1].lower()
+    # user_input_msg = clean_filename(_raw_file_name)
+    # print(user_input_msg)
+    # if user_input_msg.rsplit(".", 1)[-1].lower() != _raw_file_name.rsplit(".", 1)[-1].lower():
+    #     file_name = user_input_msg.rsplit(".", 1)[0][:255] + "." + _raw_file_name.rsplit(".", 1)[-1].lower()
+    # else:
+    #     file_name = user_input_msg[:255]
+    if Config.REMOVE_WORD:
+        file_name0 = _raw_file_name.rsplit(".",1)[0]
+        file_name1 = re.sub(f"{Config.REMOVE_WORD}","",file_name0)
+        file_name = file_name1 + _raw_file_name.rsplit(".",1)[1]
     else:
-        file_name = user_input_msg[:255]
+        file_name = _raw_file_name
     await editable.edit("Please Wait ...")
     is_big = get_media_file_size(m.reply_to_message) > (10 * 1024 * 1024)
     if not is_big:
-        _default_thumb_ = await db.get_thumbnail(m.from_user.id)
+        _default_thumb_ = await db.get_thumbnail(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
         if not _default_thumb_:
             _m_attr = get_file_attr(m.reply_to_message)
             _default_thumb_ = _m_attr.thumbs[0].file_id \
@@ -141,8 +146,8 @@ async def main_btach_rename_handler(c: Client, m: Message, editable):
             file_name=file_name,
             progress=progress_for_pyrogram,
             progress_args=(
-                "Uploading ...\n"
-                f"DC: {_c_file_id.dc_id}",
+                "Uploading 📡...\n"
+                f"DC💀: {_c_file_id.dc_id}",
                 editable,
                 c_time
             )
@@ -183,4 +188,4 @@ async def stop_button(c, m):
         temp.CANCEL = True
         msg = await c.send_message(text="<i>Trying To Stoping.....</i>", chat_id=m.chat.id)
         await asyncio.sleep(5)
-        await msg.edit("Batch Shortening Stopped Successfully 👍")
+        await msg.edit("Batch Shortening Stopped Successfully🚫 👍")
