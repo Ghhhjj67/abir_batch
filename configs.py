@@ -28,5 +28,5 @@ class Config(object):
     TO_CHANNEL = int(os.environ.get("TO_CHANNEL", "-1001785157194"))
     USERNAME = os.environ.get("USERNAME", "")
     TAG = os.environ.get("TAG", "")
-    REMOVE_WORD = os.environ.get("REMOVE_WORD", "")#multiple word is must be seperated by |
-    REMOVE_CAPTION = os.environ.get("REMOVE_CAPTION", "")#multiple word is must be seperated by |
+    REMOVE_WORD = os.environ.get("REMOVE_WORD", "@Movies4u_team")#multiple word is must be seperated by |
+    REMOVE_CAPTION = os.environ.get("REMOVE_CAPTION", "@Movies4u_team")#multiple word is must be seperated by |
