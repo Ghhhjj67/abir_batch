@@ -1,5 +1,5 @@
 # (c) @AbirHasan2005
-
+from keep_alive import keep_alive
 from typing import Union
 from pyromod import listen
 from pyrogram import Client as RawClient
@@ -30,6 +30,7 @@ class Client(RawClient, New):
         if not await db.get_bot_stats():
             await db.create_stats()
         log.info("Bot Started!")
+        keep_alive()
 
     async def stop(self, *args):
         await super().stop()
