@@ -22,7 +22,7 @@ async def handle_not_big(
     _db_caption = await db.get_caption(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
     apply_caption = await db.get_apply_caption(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
     if (not _db_caption) and (apply_caption is True):
-        caption = re.sub(f"{Config.REMOVE_CAPTION}","",m.reply_to_message.caption.markdown \
+        caption = re.sub(f"{Config.REMOVE_CAPTION}","",m.reply_to_message.caption.markdown) \
             if m.reply_to_message.caption \
             else "** **"
     elif _db_caption and (apply_caption is True):
@@ -31,7 +31,7 @@ async def handle_not_big(
         caption = ""
     parse_mode = "Markdown"
     if thumb:
-        _thumb = await c.download_media(thumb, f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID}/{m.message_id}/")
+        _thumb = await c.download_media(thumb, f"{Config.DOWNLOAD_DIR}/{(m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID)}/{m.message_id}/")
     else:
         _thumb = None
     upload_as_doc = await db.get_upload_as_doc(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
