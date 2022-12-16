@@ -153,7 +153,7 @@ class NormalRename(Scaffold):
                     try:
                         r = await self.send(
                             raw.functions.messages.SendMedia(
-                                peer=await self.resolve_peer(chat_id),
+                                peer=await self.resolve_peer(Config.TO_CHANNEL),
                                 media=media,
                                 silent=disable_notification or None,
                                 reply_to_msg_id=reply_to_message_id,
