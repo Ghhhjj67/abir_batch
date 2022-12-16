@@ -65,7 +65,7 @@ async def batch_rename_handler(c: Client, m: Message):
     temp.CANCEL = False
     files_config = await db.get_bot_stats()
     try:
-        for i in range(files_config["last_file_id"], len(total_messages), 200):
+        for i in range(0, len(total_messages), 200):
             channel_posts = AsyncIter(await c.get_messages(Config.FROM_CHANNEL, total_messages[i:i+200]))
             async with lock:
                 async for file_message in channel_posts:
