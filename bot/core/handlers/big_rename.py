@@ -144,7 +144,7 @@ async def handle_big_rename(
     _db_caption = await db.get_caption(m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID)
     apply_caption = await db.get_apply_caption(m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID)
     if (not _db_caption) and (apply_caption is True):
-        caption = re.sub(f"{Config.REMOVE_CAPTION}","",m.reply_to_message.caption.markdown) \
+        caption = re.sub(f"{Config.REMOVE_CAPTION}","",m.reply_to_message.caption.markdown)+"\n\n"+Config.TAG \
             if m.reply_to_message.caption \
             else ""
     elif _db_caption and (apply_caption is True):
