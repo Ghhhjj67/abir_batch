@@ -1,6 +1,7 @@
 # (c) @AbirHasan2005
 
 import os
+
 import time
 from typing import (
     Union,
@@ -56,7 +57,7 @@ class NormalRename(Scaffold):
             c_time = time.time()
             dl_file_path = await self.download_media(
                 file_id,
-                f"{Config.DOWNLOAD_DIR}/{chat_id if hasattr(m.from_user,"id") else Config.OWNER_ID}/{time.time()}/",
+                f"{Config.DOWNLOAD_DIR}/{chat_id}/{time.time()}/",
                 progress=progress_for_pyrogram,
                 progress_args=(
                     "Downloading ...",
@@ -79,8 +80,8 @@ class NormalRename(Scaffold):
                 ))
 
                 await editable.edit("Processing Thumbnail ...")
-                upload_as_doc = await db.get_upload_as_doc(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
-                has_db_thumb = await db.get_thumbnail(m.from_user.id if hasattr(m.from_user,"id") else Config.OWNER_ID)
+                upload_as_doc = await db.get_upload_as_doc(chat_id if hasattr(chat_id,"get") else Config.OWNER_ID)
+                has_db_thumb = await db.get_thumbnail(chat_id if hasattr(chat_id,"id") else Config.OWNER_ID)
                 width = kwargs.get("width", 0)
                 height = kwargs.get("height", 0)
                 if has_db_thumb or (not upload_as_doc):
@@ -153,7 +154,7 @@ class NormalRename(Scaffold):
                     try:
                         r = await self.send(
                             raw.functions.messages.SendMedia(
-                                peer=await self.resolve_peer(chat_id if hasattr(m.from_user,"id") else Config.TO_CHANNEL),
+                                peer=await self.resolve_peer(chat_id if hasattr(chat_id,"get") else Config.TO_CHANNEL),
                                 media=media,
                                 silent=disable_notification or None,
                                 reply_to_msg_id=reply_to_message_id,
