@@ -122,7 +122,7 @@ async def main_btach_rename_handler(c: Client, m: Message, editable):
     if Config.REMOVE_WORD:
         file_name0 = _raw_file_name.rsplit(".",1)[0]
         file_name1 = re.sub(Config.REMOVE_WORD,"",file_name0)
-        file_name = file_name1+"."+_raw_file_name.rsplit(".",1)[1]
+        file_name = Config.CH_USERNAME+file_name1+"."+_raw_file_name.rsplit(".",1)[1]
     else:
         file_name = _raw_file_name
     await editable.edit("Please Wait ...")
@@ -180,7 +180,7 @@ def clean_filename(filename):
     filename=re.sub(f"_|\.|mkv|mp4", " ", filename)
     remove_username = re.sub("(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9-_]+)", "", filename)
     filename = re.sub("  ", "", remove_username)
-    return f"{filename} {Config.USERNAME} {Config.TAG}.mkv"
+    return f"{filename} {Config.CH_USERNAME} {Config.TAG}.mkv"
 
 @Client.on_message(filters.private & filters.command('cancel') & filters.user(Config.PRO_USERS))
 async def stop_button(c, m):
