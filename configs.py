@@ -26,7 +26,7 @@ class Config(object):
     BROADCAST_AS_COPY = bool(os.environ.get("BROADCAST_AS_COPY", "False"))
     FROM_CHANNEL = int(os.environ.get("FROM_CHANNEL", "-1001865067204"))
     TO_CHANNEL = int(os.environ.get("TO_CHANNEL", "-1001541703053"))
-    USERNAME = os.environ.get("USERNAME", "")
+    CH_USERNAME = os.environ.get("CH_USERNAME", "")
     TAG = os.environ.get("TAG", "")
     REMOVE_WORD = os.environ.get("REMOVE_WORD", "@Movies4u_team")#multiple word is must be seperated by |
     REMOVE_CAPTION = os.environ.get("REMOVE_CAPTION", "@Movies4u_team")#multiple word is must be seperated by |
