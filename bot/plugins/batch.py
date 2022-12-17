@@ -121,7 +121,7 @@ async def main_btach_rename_handler(c: Client, m: Message, editable):
     #     file_name = user_input_msg[:255]
     if Config.REMOVE_WORD:
         file_name0 = _raw_file_name.rsplit(".",1)[0]
-        file_name1 = re.sub(f"{Config.REMOVE_WORD}","",file_name0)
+        file_name1 = re.sub(Config.REMOVE_WORD,"",file_name0)
         file_name = file_name1 + _raw_file_name.rsplit(".",1)[1]
     else:
         file_name = _raw_file_name
