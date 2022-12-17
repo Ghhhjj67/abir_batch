@@ -56,7 +56,7 @@ class NormalRename(Scaffold):
             c_time = time.time()
             dl_file_path = await self.download_media(
                 file_id,
-                f"{Config.DOWNLOAD_DIR}/{chat_id}/{time.time()}/",
+                f"{Config.DOWNLOAD_DIR}/{chat_id if hasattr(m.from_user,"id") else Config.OWNER_ID}/{time.time()}/",
                 progress=progress_for_pyrogram,
                 progress_args=(
                     "Downloading ...",
