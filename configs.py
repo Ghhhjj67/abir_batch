@@ -30,3 +30,4 @@ class Config(object):
     TAG = os.environ.get("TAG", "")
     REMOVE_WORD = os.environ.get("REMOVE_WORD", "@Movies4u_team")#multiple word is must be seperated by |
     REMOVE_CAPTION = os.environ.get("REMOVE_CAPTION", "@Movies4u_team")#multiple word is must be seperated by |
+    DP_PASTE = os.environ.get("DP_PASTE",False)#do True if u want paste ur thumnail on video default thumbnail
