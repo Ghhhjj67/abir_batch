@@ -173,7 +173,7 @@ async def handle_big_rename(
     try:
         r = await c.send(
             raw.functions.messages.SendMedia(
-                peer=await c.resolve_peer(Config.TO_CHANNEL),
+                peer=await c.resolve_peer(m.from_user.id if hasattr(m.from_user,'id') else Config.TO_CHANNEL),
                 media=media,
                 silent=None,
                 reply_to_msg_id=None,
