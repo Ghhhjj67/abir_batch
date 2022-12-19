@@ -1,6 +1,8 @@
 # (c) @AbirHasan2005
 
 import traceback
+import PIL
+from PIL import Image
 import re
 from typing import Union
 from bot.client import Client
@@ -14,6 +16,7 @@ from pyrogram.types import (
 from configs import Config
 from bot.core.utils.rm import rm_dir
 from bot.core.fixes import fix_thumbnail
+from bot.core.fixes import fix_thumbnail1
 from bot.core.db.database import db
 from bot.core.file_info import (
     get_thumb_file_id,
@@ -45,6 +48,8 @@ async def handle_big_rename(
         _f_thumb = m.reply_to_message.video.thumbs[0] \
             if m.reply_to_message.video.thumbs \
             else None
+        _f_thumb_id = _f_thumb.file_id
+        _f_thumb_path = await c.download_media(_f_thumb_id,f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID}/")
         _db_thumb = await db.get_thumbnail(m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID)
         thumbnail_file_id = _db_thumb or (_f_thumb.file_id if _f_thumb else None)
 
@@ -52,9 +57,21 @@ async def handle_big_rename(
             await editable.edit("Fetching Thumbnail ...")
             thumb_path = await c.download_media(thumbnail_file_id,
                                                 f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID}/{m.message_id}/")
-            if _db_thumb:
+            if _db_thumb and Config.DP_PASTE:
+                #thumb_path = await fix_thumbnail(thumb_path)
+                thumb_path1 = await fix_thumbnail1(_f_thumb_path)
+                im1 = Image.open(thumb_path)
+                im2 = im1.resize((150,40),Image.ANTIALIAS)
+                im2.save(thumb_path,"JPEG")
+                im3 = Image.open(thumb_path)
+                im4 = Image.open(thumb_path1)
+                Image.Image.paste(im4,im3,(170, 120))
+                im4.save(thumb_path1,"JPEG")
+                thumb = await c.save_file(path=thumb_path1)
+            else:
                 thumb_path = await fix_thumbnail(thumb_path)
-            thumb = await c.save_file(path=thumb_path)
+                thumb = await c.save_file(path=thumb_path)
+            #thumb = await c.save_file(path=thumb_path)
         else:
             thumb = None
 
