@@ -170,7 +170,6 @@ async def handle_big_rename(
     else:
         caption = ""
     parse_mode = "Markdown"
-    print(caption)
     try:
         r = await c.send(
             raw.functions.messages.SendMedia(
