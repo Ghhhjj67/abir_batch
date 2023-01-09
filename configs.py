@@ -28,6 +28,6 @@ class Config(object):
     TO_CHANNEL = int(os.environ.get("TO_CHANNEL", "-1001541703053"))
     CH_USERNAME = os.environ.get("CH_USERNAME", "@seaofallmovies")
     TAG = os.environ.get("TAG", "💥Join Us Oɴ Tᴇʟᴇɢʀᴀᴍ💥 ❤️ @seaofallmovies❤️")
-    REMOVE_WORD = os.environ.get("REMOVE_WORD", "💥Join Us Oɴ Tᴇʟᴇɢʀᴀᴍ💥❤️ @BuLMoviee ❤️|💥Join Us Oɴ Tᴇʟᴇɢʀᴀᴍ💥❤️ @SIDHUU5911 ❤️|@BuLMoviee Join Us On Telegram|Join Us On Telegram|@JESSEVERSE|@Jesseverse|@BuLMoviee_Join_Us_On_Telegram_|@BuLMoviee")#multiple word is must be seperated by |
-    REMOVE_CAPTION = os.environ.get("REMOVE_CAPTION", "💥Join Us Oɴ Tᴇʟᴇɢʀᴀᴍ💥❤️ @BuLMoviee ❤️|💥Join Us Oɴ Tᴇʟᴇɢʀᴀᴍ💥❤️ @SIDHUU5911 ❤️|@BuLMoviee Join Us On Telegram|Join Us On Telegram|@JESSEVERSE|@Jesseverse|@BuLMoviee_Join_Us_On_Telegram_|@BuLMoviee")#multiple word is must be seperated by |
+    REMOVE_WORD = os.environ.get("REMOVE_WORD", "💥|Join Us Oɴ Tᴇʟᴇɢʀᴀᴍ|❤️|@BuLMoviee|@SIDHUU5911|Join Us On Telegram|@JESSEVERSE|@Jesseverse|_Join_Us_On_Telegram_|@Theprofffesorr")#multiple word is must be seperated by |
+    REMOVE_CAPTION = os.environ.get("REMOVE_CAPTION", "💥|Join Us Oɴ Tᴇʟᴇɢʀᴀᴍ|❤️|@SIDHUU5911|@BuLMoviee|Join Us On Telegram||@JESSEVERSE|@Jesseverse|_Join_Us_On_Telegram_|@Theprofffesorr")#multiple word is must be seperated by |
     DP_PASTE = os.environ.get("DP_PASTE",True)#do True if u want paste ur thumnail on video default thumbnail
