@@ -183,7 +183,7 @@ async def handle_big_rename(
                 **await utils.parse_text_entities(c, caption, parse_mode, None)
             )
         )
-        await rm_dir(f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID}/{m.message_id}/")
+        await rm_dir(f"{Config.DOWNLOAD_DIR}/{m.from_user.id if hasattr(m.from_user,'id') else Config.OWNER_ID}/")
     except Exception as _err:
         Config.LOGGER.getLogger(__name__).error(_err)
         Config.LOGGER.getLogger(__name__).info(f"{traceback.format_exc()}")
