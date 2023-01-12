@@ -30,7 +30,7 @@ class Client(RawClient, New):
         if not await db.get_bot_stats():
             await db.create_stats()
         log.info("Bot Started!")
-        keep_alive()
+        #keep_alive()
 
     async def stop(self, *args):
         await super().stop()
