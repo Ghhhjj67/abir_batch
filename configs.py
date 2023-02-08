@@ -31,3 +31,4 @@ class Config(object):
     REMOVE_WORD = os.environ.get("REMOVE_WORD", "💥|Join Us Oɴ Tᴇʟᴇɢʀᴀᴍ|❤️|@BuLMoviee|@SIDHUU5911|Join Us On Telegram|@JESSEVERSE|@Jesseverse|_Join_Us_On_Telegram_|@Theprofffesorr")#multiple word is must be seperated by |
     REMOVE_CAPTION = os.environ.get("REMOVE_CAPTION", "💥|Join Us Oɴ Tᴇʟᴇɢʀᴀᴍ|❤️|@SIDHUU5911|@BuLMoviee|Join Us On Telegram||@JESSEVERSE|@Jesseverse|_Join_Us_On_Telegram_|@Theprofffesorr")#multiple word is must be seperated by |
     DP_PASTE = os.environ.get("DP_PASTE",True)#do True if u want paste ur thumnail on video default thumbnail
+    START_FROM = int(os.environ.get("START_FROM",1))
