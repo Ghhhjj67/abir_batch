@@ -73,16 +73,22 @@ async def batch_rename_handler(c: Client, m: Message):
                         break
                     if file_message.video or file_message.document:
                         try:
-                            files_config = await db.get_bot_stats()
-                            if get_media_file_id(file_message) not in files_config["file_done"]:
-                                fwd_msg = await file_message.forward(Config.LOG_CHANNEL)
-                                m = await fwd_msg.reply("Renaming this file now...")
-                                await main_btach_rename_handler(c, m, editable)
-                                success += 1
-                                files_config["file_done"].append(get_media_file_id(file_message))
-                                await db.update_stats({"total_files_done":files_config["total_files_done"]+1, "last_file_id":fwd_msg.message_id, "file_done":files_config["file_done"]})
-                                await m.delete()
-                                await fwd_msg.delete()
+                            fwd_msg = await file_message.forward(Config.LOG_CHANNEL)
+                            m = await fwd_msg.reply("Renaming this file now...")
+                            await main_btach_rename_handler(c, m, editable)
+                            success += 1
+                            await m.delete()
+                            await fwd_msg.delete()
+                            # files_config = await db.get_bot_stats()
+                            # if get_media_file_id(file_message) not in files_config["file_done"]:
+                            #     fwd_msg = await file_message.forward(Config.LOG_CHANNEL)
+                            #     m = await fwd_msg.reply("Renaming this file now...")
+                            #     await main_btach_rename_handler(c, m, editable)
+                            #     success += 1
+                            #     files_config["file_done"].append(get_media_file_id(file_message))
+                            #     await db.update_stats({"total_files_done":files_config["total_files_done"]+1, "last_file_id":fwd_msg.message_id, "file_done":files_config["file_done"]})
+                            #     await m.delete()
+                            #     await fwd_msg.delete()
                                                     # await update_stats(file_message, user_method)
                         except Exception as e:
                             print(e)
