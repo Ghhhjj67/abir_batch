@@ -1,6 +1,6 @@
-Pyrogram==2.0.97
+Pyrogram==1.4,16
 TgCrypto
-pyromod
+pyromod==1.5
 python-dotenv
 dnspython
 motor
